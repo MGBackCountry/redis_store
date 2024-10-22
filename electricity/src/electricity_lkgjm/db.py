@@ -1,0 +1,2 @@
+"""Mimic electricity database"""
+electricity = {}
