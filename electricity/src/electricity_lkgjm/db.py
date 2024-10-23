@@ -1,2 +1,4 @@
-"""Mimic electricity database"""
-electricity = {}
+"""db.py
+Purpose: Mimic electricity database
+"""
+electricity_db = {}

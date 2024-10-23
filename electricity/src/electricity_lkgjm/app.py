@@ -2,6 +2,7 @@
 
 from flask import Flask
 from flask_smorest import Api
+from resources.electricity import blp as blueprint_electricity
 
 app = Flask(__name__)
 app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -13,6 +14,7 @@ app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
 app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
 
 api = Api(app)
+api.register_blueprint(blueprint_electricity)
 
 if __name__ == '__main__':
     app.run()

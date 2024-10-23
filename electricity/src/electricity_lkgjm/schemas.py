@@ -8,7 +8,7 @@ class PowerSchema(Schema):
 
 
 class ElectricitySchema(Schema):
-    # id = fields.Str(dump_only=True)
+    id = fields.Str(dump_only=True)
     date = fields.Date(required=True)
     # noinspection PyTypeChecker
     consume = fields.Nested(PowerSchema)
