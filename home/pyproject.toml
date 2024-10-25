@@ -1,5 +1,5 @@
 [project]
-name = "electricity_lkgjm"
+name = "homeMGBackCountry"
 version = "0.1.0"
 authors = [
     { name="Gertjan van der Meulen", email="gertjan@hollands-groen.nl" },

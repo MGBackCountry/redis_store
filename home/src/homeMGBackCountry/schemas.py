@@ -2,7 +2,7 @@
 from marshmallow import Schema, fields
 
 
-class PowerSchema(Schema):
+class FlowRateSchema(Schema):
     high = fields.Int(required=True)
     low = fields.Int(required=True)
 
@@ -11,6 +11,6 @@ class ElectricitySchema(Schema):
     id = fields.Str(dump_only=True)
     date = fields.Date(required=True)
     # noinspection PyTypeChecker
-    consume = fields.Nested(PowerSchema,required=True)
+    consume = fields.Nested(FlowRateSchema,required=True)
     # noinspection PyTypeChecker
-    supply = fields.Nested(PowerSchema,required=True)
+    supply = fields.Nested(FlowRateSchema,required=True)
