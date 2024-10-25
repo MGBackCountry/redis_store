@@ -1,9 +1,8 @@
 FROM python:3.12-alpine
-EXPOSE 5000
 RUN apk update
-RUN adduser -D lkgjm
-USER lkgjm
-ENV PATH /home/lkgjm/.local/bin:$PATH
+RUN adduser -D mgbackcountry
+USER mgbackcountry
+ENV PATH /home/mgbackcountry/.local/bin:$PATH
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
