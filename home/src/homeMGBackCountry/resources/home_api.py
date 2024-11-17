@@ -2,14 +2,13 @@
 import json
 from datetime import datetime
 
-from dateutil.parser import parse, ParserError
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 
 from home_db import redis
 from redis.commands.json.path import Path
 
-from schemas import ElectricitySchema, QueryParamsSchema, DeletePatchQueryParamsSchema, PatchElectricitySchema
+from schemas import ElectricitySchema, QueryParamsSchema, DeleteAndPatchQueryParamsSchema, PatchElectricitySchema
 
 blp = Blueprint("HomeApi", __name__, description="ENDPOINT operations on electricity db")
 
@@ -21,7 +20,6 @@ class HomeApi(MethodView):
     @blp.arguments(ElectricitySchema)
     @blp.response(200)
     def post(self, electricity_data, address):
-        electricity_data["date"] = self.format_date(electricity_data["date"])
         address_date = f"{address}{dlm}{electricity_data['date']}"
         if redis.json().get(address_date):
             abort(400, message=f"Entry already exists")
@@ -42,7 +40,7 @@ class HomeApi(MethodView):
             abort(404, message="address not found")
         return electricity_data
 
-    @blp.arguments(DeletePatchQueryParamsSchema, location="query")
+    @blp.arguments(DeleteAndPatchQueryParamsSchema, location="query")
     @blp.arguments(PatchElectricitySchema)
     @blp.response(200, ElectricitySchema)
     def patch(self, electricity_path_param, electricity_query_param, address):
@@ -56,7 +54,7 @@ class HomeApi(MethodView):
         redis.json().set(address_date, Path.root_path(), json.dumps(electricity_dict))
         return electricity_dict
 
-    @blp.arguments(DeletePatchQueryParamsSchema, location="query")
+    @blp.arguments(DeleteAndPatchQueryParamsSchema, location="query")
     @blp.response(204)
     def delete(self, electricity_data, address):
         address_date = f"{address}{dlm}{electricity_data['date']}"
@@ -64,11 +62,3 @@ class HomeApi(MethodView):
             abort(404, message="address not found")
         redis.json().delete(address_date)
         return
-
-    @staticmethod
-    def format_date(date_str):
-        """Validate and format date 'YYYY-MM-DD'"""
-        try:
-            return datetime.strftime(parse(date_str), "%Y-%m-%d")
-        except ParserError as error:
-            abort(400, message=str(error))
