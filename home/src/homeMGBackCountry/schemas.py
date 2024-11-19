@@ -13,9 +13,9 @@ class FlowRateSchema(Schema):
 class ElectricitySchema(Schema):
     date = fields.Str(required=True)
     # noinspection PyTypeChecker
-    consume = fields.Nested(FlowRateSchema,required=True)
+    consume = fields.Nested(FlowRateSchema, required=True)
     # noinspection PyTypeChecker
-    supply = fields.Nested(FlowRateSchema,required=True)
+    supply = fields.Nested(FlowRateSchema, required=True)
 
     @post_load
     def format_date(self, in_data, **kwargs):
