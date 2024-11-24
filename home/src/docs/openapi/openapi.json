@@ -1,0 +1,301 @@
+{
+  "paths": {
+    "/home/{address}/electricity": {
+      "get": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_date",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2000-01-01",
+              "writeOnly": true
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "end_date",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2100-01-01",
+              "writeOnly": true
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_ENTITY"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Electricity"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "tags": [
+          "HomeApi"
+        ]
+      },
+      "post": {
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_ENTITY"
+          },
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Electricity"
+              }
+            }
+          }
+        },
+        "tags": [
+          "HomeApi"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "writeOnly": true
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_ENTITY"
+          },
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchElectricity"
+              }
+            }
+          }
+        },
+        "tags": [
+          "HomeApi"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "writeOnly": true
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_ENTITY"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "tags": [
+          "HomeApi"
+        ]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "address",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      ]
+    }
+  },
+  "info": {
+    "title": "Store data home REST API",
+    "version": "v2.0.0"
+  },
+  "tags": [
+    {
+      "name": "HomeApi",
+      "description": "ENDPOINT operations on electricity db"
+    }
+  ],
+  "openapi": "3.1.1",
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          },
+          "status": {
+            "type": "string",
+            "description": "Error name"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "errors": {
+            "type": "object",
+            "description": "Errors",
+            "additionalProperties": {
+
+            }
+          }
+        }
+      },
+      "PaginationMetadata": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer"
+          },
+          "total_pages": {
+            "type": "integer"
+          },
+          "first_page": {
+            "type": "integer"
+          },
+          "last_page": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "previous_page": {
+            "type": "integer"
+          },
+          "next_page": {
+            "type": "integer"
+          }
+        }
+      },
+      "FlowRate": {
+        "type": "object",
+        "properties": {
+          "high": {
+            "type": "integer"
+          },
+          "low": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "high",
+          "low"
+        ]
+      },
+      "Electricity": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "consume": {
+            "$ref": "#/components/schemas/FlowRate"
+          },
+          "supply": {
+            "$ref": "#/components/schemas/FlowRate"
+          }
+        },
+        "required": [
+          "consume",
+          "date",
+          "supply"
+        ]
+      },
+      "PatchElectricity": {
+        "type": "object",
+        "properties": {
+          "consume": {
+            "writeOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FlowRate"
+              }
+            ]
+          },
+          "supply": {
+            "writeOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FlowRate"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "UNPROCESSABLE_ENTITY": {
+        "description": "Unprocessable Entity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "DEFAULT_ERROR": {
+        "description": "Default error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
