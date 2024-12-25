@@ -24,15 +24,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: home-app-svc
+  name: home-app-service
   namespace: redis-db
   labels:
     app: home-app
 spec:
   type: LoadBalancer
   ports:
-    - port: 8100
+    - port: 5100
       targetPort: 5100
+      nodePort: 30001
       protocol: TCP
   selector:
-    app: myflaskapp
+    app: home-app
