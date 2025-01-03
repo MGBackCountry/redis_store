@@ -1,0 +1,4 @@
+replicaCount: 1
+appPort: 5100
+appNodePort: 30001
+dockerRepository: gjmlk

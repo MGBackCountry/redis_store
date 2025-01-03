@@ -1,0 +1,6 @@
+apiVersion: v2
+version: 0.1.0
+name: home-app
+description: Home electricity app chart
+type: application
+appVersion: "1.0.0"
