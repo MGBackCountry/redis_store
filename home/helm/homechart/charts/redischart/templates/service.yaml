@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-service
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+    version: {{ .Chart.AppVersion }}
+spec:
+  type: NodePort
+  ports:
+    - port: {{ .Values.redisPort }}
+      targetPort: {{ .Values.redisPort }}
+      nodePort: {{ .Values.redisNodePort }}
+      protocol: TCP
+  selector:
+    app: {{ .Chart.Name }}
