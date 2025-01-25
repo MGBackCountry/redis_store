@@ -1,20 +1,26 @@
-from numbers_parser import Document
-
 class Energy:
-    def __init__(self, document):
-        self.document = document
 
-    def __getattr__(self, name: str):
-        return self.__dict__[f"_{name}"]
+    def __init__(self, doc):
+        self.doc = doc
 
-    def __setattr__(self, name, value):
-        self.__dict__[f"_{name}"] = Document(value).sheets[0].tables[0]
+    @property
+    def doc(self):
+        return self._doc
+
+    @doc.setter
+    def doc(self, doc):
+        from numbers_parser import Document
+        self._doc = Document(doc).sheets[0].tables[0]
 
 if __name__ == "__main__":
     fname = "/Users/gertjan/Documents/energie rekening/energie_tolakkerweg.numbers"
-    table = Energy(fname).document
-    for row in table.iter_rows(min_row=0, min_col=0, max_row=4, max_col=table.num_cols-1):
-        for cell in row:
-            print(cell.formatted_value, end = " ")
-        print()
-
+    keys = ["date", "consume", "supply"]
+    subkeys = ["low", "high"]
+    energy = Energy(fname)
+    for row in energy.doc.iter_rows(min_row=1, min_col=0, max_row=energy.doc.num_rows-1,
+                                   max_col=5, values_only=True):
+        formatted_row = [int(i) if isinstance(i,float) else i for i in row]
+        consume = dict(zip(subkeys, formatted_row[1:3]))
+        supply = dict(zip(subkeys, formatted_row[3:5]))
+        energy = dict(zip(keys, [f"{row[0]:%Y-%m-%d}", consume, supply]))
+        print(energy)
