@@ -1,7 +1,7 @@
 services:
   home-api:
     build:
-      context: homeMGBackCountry
+      context: electricity
     environment:
       - REDIS_HOST=redis-db
       - REDIS_PORT=6379
@@ -15,7 +15,7 @@ services:
     container_name: home-api
     hostname: home.app.docker
   redis-db:
-    image: redis/redis-stack
+    image: redis/redis-stack:latest
     container_name: redis-db
     hostname: redis.docker
     ports:
