@@ -22,5 +22,5 @@ RUN apk update && adduser -D mgbackcountry
 USER mgbackcountry
 
 EXPOSE ${FLASK_RUN_PORT}
-CMD ["flask", "run", "--debug"]
+ENTRYPOINT ["flask", "run", "--debug"]
 

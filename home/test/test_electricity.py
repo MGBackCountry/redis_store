@@ -4,8 +4,8 @@ from unittest.mock import MagicMock, patch
 from marshmallow.exceptions import ValidationError
 from werkzeug.exceptions import HTTPException
 
-from home.src.electricity.model.home import EnergyModel
-from home.src.electricity.schemas import ElectricitySchema
+from home.electricity.model.home import EnergyModel
+from home.electricity.schemas import ElectricitySchema
 
 
 class TestElectricity(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestElectricity(unittest.TestCase):
         mock_home = MagicMock()
         mock_home.json().get.return_value = None
         mock_home.json().set.return_value = True
-        with patch('home.src.electricity.model.home.home', mock_home):
+        with patch('home.electricity.model.home.home', mock_home):
             model = EnergyModel(address_id='123', body_params={'date': '2024-06-01', 'usage': 10})
             result = model.create_electricity()
             self.assertEqual(result, {'date': '2024-06-01', 'usage': 10})
@@ -22,8 +22,8 @@ class TestElectricity(unittest.TestCase):
     def test_aborts_when_electricity_entry_already_exists(self):
         mock_home = MagicMock()
         mock_home.json().get.return_value = {'date': '2024-06-01', 'usage': 10}
-        with patch('home.src.electricity.model.home.home', mock_home), \
-             patch('home.src.electricity.model.home.abort') as mock_abort:
+        with patch('home.electricity.model.home.home', mock_home), \
+             patch('home.electricity.model.home.abort') as mock_abort:
             model = EnergyModel(address_id='123', body_params={'date': '2024-06-01', 'usage': 10})
             model.create_electricity()
             mock_abort.assert_called_once_with(400, message='Entry already exists')
