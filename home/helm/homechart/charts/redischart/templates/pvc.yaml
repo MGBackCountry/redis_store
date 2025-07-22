@@ -5,7 +5,7 @@ metadata:
   namespace:  {{ .Release.Namespace }}
   labels:
     app: {{ .Chart.Name }}
-    version: {{ .Chart.AppVersion }}
+    environment: {{ .Values.environment }}
 spec:
   accessModes:
     - ReadWriteOnce

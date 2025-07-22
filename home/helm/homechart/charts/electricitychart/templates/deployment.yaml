@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Chart.Name }}
-    version: {{ .Chart.AppVersion }}
+    environment: {{ .Values.environment}}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.dockerRepository}}/{{ .Chart.Name }}:{{.Chart.Version}}
+          image: "{{ .Values.dockerRepository}}/{{ .Chart.Name }}:{{.Chart.Version}}"
           ports:
             - containerPort: {{ .Values.appPort }}
