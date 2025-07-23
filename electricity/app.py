@@ -2,7 +2,7 @@
 
 from flask import Flask
 from flask_smorest import Api
-from resources.home_energy import blp as home_api
+from electricity.resources.home_energy import blp as home_api
 
 app = Flask(__name__)
 app.config["PROPAGATE_EXCEPTIONS"] = True

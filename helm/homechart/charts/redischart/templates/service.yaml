@@ -5,13 +5,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Chart.Name }}
-    version: {{ .Chart.AppVersion }}
+    environment: {{ .Values.environment }}
 spec:
   type: NodePort
   ports:
     - port: {{ .Values.redisPort }}
-      targetPort: {{ .Values.redisPort }}
-      nodePort: {{ .Values.redisNodePort }}
       protocol: TCP
   selector:
     app: {{ .Chart.Name }}

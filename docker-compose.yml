@@ -1,22 +1,22 @@
 services:
-  home-api:
+  electricity:
     build:
-      context: electricity
+      context: .
     environment:
-      - REDIS_HOST=redis-db
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
       - FLASK_PORT=5100
     ports:
-      - 8100:5100
+      - "8100:5100"
     networks:
       - frontend
     depends_on:
-      - redis-db
-    container_name: home-api
-    hostname: home.app.docker
-  redis-db:
+      - redis
+    container_name: electricity
+    hostname: electricity.docker
+  redis:
     image: redis/redis-stack:latest
-    container_name: redis-db
+    container_name: redis
     hostname: redis.docker
     ports:
       - "16379:6379"

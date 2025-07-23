@@ -1,2 +1,3 @@
-# persist_config_data
-Store local data in a persistent redis database
+# Electricity usage
+
+New project to store usage of electricity in a redis database

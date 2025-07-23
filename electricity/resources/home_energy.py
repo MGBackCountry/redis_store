@@ -2,8 +2,8 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint
 
-from model.home import EnergyModel
-from schemas import ElectricitySchema, QueryParamsSchema, DeleteAndPatchQueryParamsSchema, PatchElectricitySchema
+from electricity.model.home import EnergyModel
+from electricity.schemas import ElectricitySchema, QueryParamsSchema, DeleteAndPatchQueryParamsSchema, PatchElectricitySchema
 
 blp = Blueprint("HomeApi", __name__, description="ENDPOINT operations on electricity db")
 

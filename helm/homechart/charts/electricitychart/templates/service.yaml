@@ -5,13 +5,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Chart.Name }}
-    version: {{ .Chart.AppVersion }}
+    environment: {{ .Values.environment}}
 spec:
   type: LoadBalancer
   ports:
     - port: {{ .Values.appPort }}
-      targetPort: {{ .Values.appPort }}
-      nodePort: {{ .Values.appNodePort }}
       protocol: TCP
   selector:
     app: {{ .Chart.Name }}

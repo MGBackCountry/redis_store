@@ -1,11 +1,11 @@
 FROM python:alpine3.22
 
-WORKDIR /app
+WORKDIR /app/electricity
 COPY requirements.txt .
 RUN apk add --no-cache gcc musl-dev && \
     pip install --no-cache-dir --upgrade -r requirements.txt
 
-COPY . .
+COPY electricity/ .
 
 ARG FLASK_RUN_PORT=5100
 ARG REDIS_HOST=redis-service
@@ -22,5 +22,5 @@ RUN apk update && adduser -D mgbackcountry
 USER mgbackcountry
 
 EXPOSE ${FLASK_RUN_PORT}
-CMD ["flask", "run", "--debug"]
+ENTRYPOINT ["flask", "run", "--debug"]
 

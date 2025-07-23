@@ -2,7 +2,7 @@ from datetime import datetime
 from flask_smorest import abort
 from redis.commands.json.path import Path
 
-from home_db import redis_home as home
+from electricity.home_db import redis_home as home
 
 
 class EnergyModel():

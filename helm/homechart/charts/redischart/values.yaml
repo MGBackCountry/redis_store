@@ -1,6 +1,6 @@
+environment: dev
 replicaCount: 1
 redisPort: 6379
-redisNodePort: 30079
 image: redis/redis-stack
 hostPath: /mnt/data/redis
 storage: 5Gi
