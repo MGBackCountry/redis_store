@@ -22,10 +22,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set homeapp tag variable
+        id: vars
+        run: echo "tag_version=1.1.0" >> $GITHUB_ENV
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: home/src/electricity
           file: home/src/electricity/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/electricity-use:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/home-app:${{ env.tag_version }}

@@ -3,4 +3,4 @@ version: 1.0.0
 name: home-app
 description: Home electricity app chart
 type: application
-appVersion: "1.0.0"
+appVersion: "1.1.0"
