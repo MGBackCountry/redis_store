@@ -1,5 +1,5 @@
 apiVersion: v2
 version: 1.0.0
-name: homechart
+name: supply
 description: Track home energy supply and use
 type: application
