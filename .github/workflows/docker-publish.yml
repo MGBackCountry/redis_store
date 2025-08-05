@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           load: true
-          tags: ${{ REPOSITORY }}:${{ env.TEST_TAG }}
+          tags: ${{ env.REPOSITORY }}:${{ env.TEST_TAG }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -51,6 +51,6 @@ jobs:
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ REPOSITORY }}:${{ env.LATEST_TAG }}
+          tags: ${{ env.REPOSITORY }}:${{ env.LATEST_TAG }}
           secrets: |
             "github_token=${{ secrets.GITHUB_TOKEN }}"
