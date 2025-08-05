@@ -10,8 +10,7 @@ on:
 env:
   LATEST_TAG: latest
   TEST_TAG: test
-  REPOSITORY: ${{ vars.DOCKERHUB_USERNAME}}/electricity-supply
-
+  REPOSITORY: electricity-supply
 
 jobs:
   build-and-push:
@@ -42,7 +41,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           load: true
-          tags: ${{ env.REPOSITORY }}:${{ env.TEST_TAG }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY }}:${{ env.TEST_TAG }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -51,6 +50,6 @@ jobs:
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ env.REPOSITORY }}:${{ env.LATEST_TAG }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY }}:${{ env.LATEST_TAG }}
           secrets: |
             "github_token=${{ secrets.GITHUB_TOKEN }}"
