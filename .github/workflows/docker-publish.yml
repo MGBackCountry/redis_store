@@ -10,7 +10,7 @@ on:
 env:
   LATEST_TAG: latest
   TEST_TAG: test
-  REPOSITORY: ${{ secrets.DOCKERHUB_USERNAME}}/}electricity-supply
+  REPOSITORY: ${{ vars.DOCKERHUB_USERNAME}}/}electricity-supply
 
 
 jobs:
