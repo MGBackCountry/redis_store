@@ -1,4 +1,4 @@
-"""Validation schemas"""
+"""Database validation schemas"""
 from marshmallow import Schema, fields, post_load
 from flask_smorest import abort
 from datetime import date, datetime
