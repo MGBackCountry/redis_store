@@ -1,5 +1,5 @@
 """home_db.py
-Purpose: Connect to redis database
+Purpose: Connect to redis database with flask-smorest
 """
 from os import environ
 from redis import Redis
