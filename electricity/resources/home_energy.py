@@ -1,4 +1,4 @@
-"""Endpoint electricity"""
+"""API Endpoint electricity"""
 from flask.views import MethodView
 from flask_smorest import Blueprint
 
