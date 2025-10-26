@@ -3,4 +3,4 @@ version: 1.0.0
 name: electricity-supply
 description: Electricity supply app
 type: application
-appVersion: "latest"
+appVersion: 2.0.0
