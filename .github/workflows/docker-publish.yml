@@ -4,12 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'electricity/**'
 
 env:
-  LATEST_TAG: latest
-  TEST_TAG: test
+  DEPLOYMENT_TAG: 2.0.0
+  TEST_TAG: test2.0.0
   REPOSITORY: electricity-supply
 
 jobs:
@@ -50,6 +48,6 @@ jobs:
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY }}:${{ env.LATEST_TAG }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY }}:${{ env.DEPLOYMENT_TAG }}
           secrets: |
             "github_token=${{ secrets.GITHUB_TOKEN }}"
