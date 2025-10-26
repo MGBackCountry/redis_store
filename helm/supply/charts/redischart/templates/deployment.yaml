@@ -25,9 +25,9 @@ spec:
             - name: ALLOW_EMPTY_PASSWORD
               value: "yes"
           volumeMounts:
-            - name: {{ .Chart.Name }}-storage
-              mountPath: {{ .Chart.Name }}/config
+            - name: local-storage
+              mountPath: "/var/local/redis"
       volumes:
-        - name: {{ .Chart.Name }}-storage
+        - name: local-storage
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-{{ .Chart.Name }}-pvc

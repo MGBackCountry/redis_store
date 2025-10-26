@@ -4,3 +4,4 @@ redisPort: 6379
 image: redis/redis-stack
 hostPath: /mnt/data/redis
 storage: 5Gi
+nodeName: docker-desktop

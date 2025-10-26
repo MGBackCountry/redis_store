@@ -1,13 +1,10 @@
 services:
   electricity:
-    build:
-      context: .
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - FLASK_PORT=5100
+    image: gjmlk/electricity-supply:2.0.0
     ports:
-      - "8100:5100"
+      - name: electricity
+        target: 5100
+        published: 8100
     networks:
       - frontend
     depends_on:
@@ -19,8 +16,12 @@ services:
     container_name: redis
     hostname: redis.docker
     ports:
-      - "16379:6379"
-      - '18001:8001'
+      - name: redis
+        target: 6379
+        published: 16379
+      - name: redis-commander
+        target: 8001
+        published: 18001
     networks:
       - frontend
     environment:
