@@ -6,18 +6,7 @@ metadata:
 spec:
   capacity:
     storage: {{ .Values.storage }}
-  volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
-  local:
-    path: /mnt/data/sdd1
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - {{ .Values.nodeName }}
+  hostPath:
+      path: {{ .Values.hostPath }}
