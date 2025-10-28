@@ -20,14 +20,14 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image }}
           ports:
-            - containerPort: {{ .Values.redisPort}}
+            - containerPort: {{ .Values.redisPort }}
           env:
             - name: ALLOW_EMPTY_PASSWORD
               value: "yes"
           volumeMounts:
-            - name: {{ .Chart.Name }}-storage
-              mountPath: {{ .Chart.Name }}/config
+            - name: {{ .Release.Name }}-{{ .Chart.Name }}-data-pvc
+              mountPath: /data
       volumes:
-        - name: {{ .Chart.Name }}-storage
+        - name: {{ .Release.Name }}-{{ .Chart.Name }}-data-pvc
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-{{ .Chart.Name }}-pvc
+            claimName: {{ .Release.Name }}-{{ .Chart.Name }}-data-pvc

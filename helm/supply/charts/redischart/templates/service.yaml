@@ -7,9 +7,10 @@ metadata:
     app: {{ .Chart.Name }}
     environment: {{ .Values.environment }}
 spec:
-  type: NodePort
+  clusterIP: None
   ports:
-    - port: {{ .Values.redisPort }}
+    - name: redis
+      port: {{ .Values.redisPort }}
       protocol: TCP
   selector:
     app: {{ .Chart.Name }}

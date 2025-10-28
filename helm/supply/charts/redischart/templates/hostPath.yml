@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-hostpath
+  namespace:  {{ .Release.Namespace }}
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: {{ .Values.nodeName | quote }}
+  containers:
+    - name: {{ .Chart.Name }}
+      image: {{ .Values.image }}:latest
+      ports:
+        - containerPort: {{ .Values.redisPort }}
+      volumeMounts:
+        - name: data
+          mountPath: /data
+  volumes:
+    - name: data
+      hostPath:
+        path: {{ .Values.hostPath | quote }}
+        type: DirectoryOrCreate

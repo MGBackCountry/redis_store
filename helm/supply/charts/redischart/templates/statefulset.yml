@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-statefulset
+  namespace:  {{ .Release.Namespace }}
+spec:
+  serviceName: {{ .Chart.Name }}-service
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: {{ .Values.nodeName | quote }}
+      # alternatively use: spec.nodeName: {{ .Values.nodeName }} (schedules exactly to that node)
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image }}:latest
+          ports:
+            - containerPort: {{ .Values.redisPort }}
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+          volumeMounts:
+            - name: {{ .Release.Name }}-{{ .Chart.Name }}-data-pvc
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Release.Name }}-{{ .Chart.Name }}-data-pvc
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.storage | quote }}
+        storageClassName: ""
